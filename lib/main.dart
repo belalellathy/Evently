@@ -1,8 +1,8 @@
 import 'package:evently/apptheme.dart';
+import 'package:evently/create_event.dart';
 import 'package:evently/login_screen.dart';
 import 'package:evently/mainscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main()async{
@@ -21,11 +21,12 @@ class RUNAPP extends StatelessWidget {
       initialRoute:"mainscreen" ,
       routes: {
         "Home": (context)=>const Login(),
-        "mainscreen":(context)=>Mainscreen()
+        "mainscreen":(context)=>const Mainscreen(),
+        "CreateEvent":(context)=>const CreateEvent()
       },
       theme: Apptheme.lightTheme,
       darkTheme: Apptheme.darkTheme,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
     );
   }
 }
