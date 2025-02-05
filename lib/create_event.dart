@@ -1,5 +1,6 @@
 
 import 'package:evently/apptheme.dart';
+import 'package:evently/firebase_service.dart';
 import 'package:evently/models/categories.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/tabs/tab_item.dart';
@@ -23,6 +24,8 @@ class _CreateEventState extends State<CreateEvent> {
   DateTime ?selecteddate;
   TimeOfDay ?selectedtime;
   String?_errorText_title;
+  String?_errorText_date;
+  String?_errorText_time;
   String?_errorText_descriptionn;
   @override
   Widget build(BuildContext context) {
@@ -112,60 +115,86 @@ class _CreateEventState extends State<CreateEvent> {
                 
                 
                 const SizedBox(height: 16,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.date_range_sharp),
-                      const SizedBox(width: 10,),
-                      Text("Event Date",style: textTheme.headlineMedium),
-                      const Spacer(),
-                      InkWell(
-                        onTap: ()async{
-                          DateTime?date=await showDatePicker(context: context,
-                            firstDate: DateTime.now(), 
-                            lastDate: DateTime.now().add(const Duration(days: 365)),
-                            initialEntryMode: DatePickerEntryMode.calendarOnly,
-                            
-                            );
-                            if(date!=null){
-                              selecteddate=date;
-                              setState(() {
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.date_range_sharp),
+                          const SizedBox(width: 10,),
+                          Text("Event Date",style: textTheme.headlineMedium),
+                          const Spacer(),
+                          InkWell(
+                            onTap: ()async{
+                              DateTime?date=await showDatePicker(context: context,
+                                firstDate: DateTime.now(), 
+                                lastDate: DateTime.now().add(const Duration(days: 365)),
+                                initialEntryMode: DatePickerEntryMode.calendarOnly,
                                 
-                              });
-                            }
-                        },
-                        child:selecteddate!=null? Text("${selecteddate!.day}/${selecteddate!.month}/${selecteddate!.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ),):
-                         Text("Choose date",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
-                  
-                    ],
-                  ),
+                                );
+                                if(date!=null){
+                                  selecteddate=date;
+                                  _errorText_date=null;
+                                  setState(() {
+                                    
+                                  });
+                                }else{
+                                  _errorText_date="please choose date";
+                                }
+                                
+                            },
+                            child:selecteddate!=null? Text("${selecteddate!.day}/${selecteddate!.month}/${selecteddate!.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ),):
+                             Text("Choose date",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
+                      
+                        ],
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: _errorText_date!=null?Text("$_errorText_date",style: textTheme.bodySmall?.copyWith(color:Colors.red),
+                    textAlign: TextAlign.right,):null,)
+                  ],
                 ),
                 const SizedBox(height: 16,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:  16.0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.timer_sharp),
-                      const SizedBox(width: 10,),
-                      Text("Event Time",style: textTheme.headlineMedium),
-                      const Spacer(),
-                      InkWell(
-                        onTap: ()async {
-                        TimeOfDay?timeOfDay= await showTimePicker(context: context, 
-                          initialTime: TimeOfDay.now(),
-                          );
-                          if(timeOfDay!=null){
-                            selectedtime=timeOfDay;
-                            setState(() {
-                              
-                            });
-                          }
-                        },
-                        child:selectedtime!=null? Text(selectedtime!.format(context),style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue )): Text("Choose Time",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
-                  
-                    ],
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal:  16.0),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.timer_sharp),
+                          const SizedBox(width: 10,),
+                          Text("Event Time",style: textTheme.headlineMedium),
+                          const Spacer(),
+                          InkWell(
+                            onTap: ()async {
+                            TimeOfDay?timeOfDay= await showTimePicker(context: context, 
+                              initialTime: TimeOfDay.now(),
+                              );
+                              if(timeOfDay!=null){
+                                selectedtime=timeOfDay;
+                                _errorText_time=null;
+                                setState(() {
+                                  
+                                });
+                              }else{
+                                _errorText_time="please pick time";
+                                setState(() {
+                                  
+                                });
+                              }
+                            },
+                            child:selectedtime!=null? Text(selectedtime!.format(context),style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue )): Text("Choose Time",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
+                      
+                        ],
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: _errorText_time!=null?Text("$_errorText_time",style: textTheme.bodySmall?.copyWith(color:Colors.red),
+                    textAlign: TextAlign.right,):null,)
+                  ],
                 ),
                 const SizedBox(height: 16,),
                 Padding(
@@ -210,14 +239,15 @@ class _CreateEventState extends State<CreateEvent> {
     setState(() {
       _errorText_descriptionn=_description.text.isEmpty?"Description can't be empty":null;
       _errorText_title=_title.text.isEmpty?"Title can't be empty":null;
+      _errorText_date=selecteddate==null?"please pick date":null;
+      _errorText_time=selectedtime==null?"please pick time":null;
     });
     if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null){
-      Event newevent=Event(title: _title.toString(),category: Category.categories[currentindex],date: selecteddate!,time: selectedtime!,description: _description.toString());
-      print("succefyl");
-      print(newevent.category.name);
+      DateTime dateTime=DateTime(selecteddate!.year,selecteddate!.month,selecteddate!.day,selectedtime!.hour,selectedtime!.minute);
+      Event newevent=Event(title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
+      FirebaseService.addEventToFirestore(newevent);
     }
     else{
-      print("Failed");
       return;
     }
   }

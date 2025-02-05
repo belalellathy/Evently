@@ -23,6 +23,5 @@ Category categories;
           Text(categories.name)
         ],
       ) ,
-    );
-  }
+    );  }
 }
