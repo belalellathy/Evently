@@ -16,6 +16,14 @@ class FirebaseService{
       event.id=docref.id;
       return docref.set(event);
   }
+ static Future<void> overwriteEvent(Event event ) {
+     CollectionReference<Event>eventscollection= geteventscollection();
+      DocumentReference<Event>docref= eventscollection.doc(event.id);
+      
+      return docref.set(event);
+    
+
+  }
   static Future<List<Event>>geteventsfromfirestor()async{
     CollectionReference<Event>eventscollection=geteventscollection();
     QuerySnapshot<Event>querySnapshot=await eventscollection.get();

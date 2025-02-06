@@ -6,16 +6,16 @@ import 'package:evently/models/event.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
 
-class CreateEvent extends StatefulWidget {
-  const CreateEvent({super.key});
+class Editeventscreen extends StatefulWidget {
+  const Editeventscreen({super.key});
 
 
 
   @override
-  State<CreateEvent> createState() => _CreateEventState();
+  State<Editeventscreen> createState() => _EditeventscreenState();
 }
 
-class _CreateEventState extends State<CreateEvent> {
+class _EditeventscreenState extends State<Editeventscreen> {
   int currentindex=0;
 
 
@@ -27,13 +27,16 @@ class _CreateEventState extends State<CreateEvent> {
   String?_errorText_date;
   String?_errorText_time;
   String?_errorText_descriptionn;
+  late String eventid;
   @override
   Widget build(BuildContext context) {
       TextTheme textTheme= Theme.of(context).textTheme;
+      Event event= ModalRoute.of(context)!.settings.arguments as Event;
+      eventid=event.id;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Create Event", ),
+          title: const Text("Edit Event", ),
         
         ),
         body: SizedBox(
@@ -85,7 +88,7 @@ class _CreateEventState extends State<CreateEvent> {
                   child: TextFormField(
                     controller: _title,
                     decoration: InputDecoration(
-                      hintText: "Event Title",
+                      hintText: event.title,
                       errorText: _errorText_title,
                       prefixIcon: const Icon(
                         Icons.note_alt_rounded
@@ -105,7 +108,7 @@ class _CreateEventState extends State<CreateEvent> {
                     maxLines: 4,
                     controller: _description,
                       decoration: InputDecoration(
-                      hintText: "Event Description",
+                      hintText: event.description,
                       errorText: _errorText_descriptionn,
                       
                       
@@ -147,7 +150,7 @@ class _CreateEventState extends State<CreateEvent> {
                                 
                             },
                             child:selecteddate!=null? Text("${selecteddate!.day}/${selecteddate!.month}/${selecteddate!.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ),):
-                             Text("Choose date",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
+                             Text("${event.date.day}/${event.date.month}/${event.date.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
                       
                         ],
                       ),
@@ -187,7 +190,7 @@ class _CreateEventState extends State<CreateEvent> {
                                 });
                               }
                             },
-                            child:selectedtime!=null? Text(selectedtime!.format(context),style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue )): Text("Choose Time",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
+                            child:selectedtime!=null? Text(selectedtime!.format(context),style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue )): Text("${event.date.hour}:${event.date.minute}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
                       
                         ],
                       ),
@@ -216,7 +219,7 @@ class _CreateEventState extends State<CreateEvent> {
                           
                         
                           
-                        ), child: const Text("Add Event",style:TextStyle(
+                        ), child: const Text("Edit Event",style:TextStyle(
                           
                           fontSize: 20,
                           color: Colors.white
@@ -245,8 +248,8 @@ class _CreateEventState extends State<CreateEvent> {
     });
     if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null){
       DateTime dateTime=DateTime(selecteddate!.year,selecteddate!.month,selecteddate!.day,selectedtime!.hour,selectedtime!.minute);
-      Event newevent=Event(title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
-      FirebaseService.addEventToFirestore(newevent);
+      Event newevent=Event(id:eventid, title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
+      FirebaseService.overwriteEvent(newevent);
       Navigator.of(context).pushNamed("mainscreen");
     }
     else{

@@ -28,6 +28,7 @@ class Apptheme {
     ),
     scaffoldBackgroundColor:primarydark,
     appBarTheme: const AppBarTheme(
+      
       backgroundColor:primarydark,
       foregroundColor: blue,
       centerTitle: true,
@@ -87,9 +88,11 @@ class Apptheme {
       shape: CircleBorder(side: BorderSide(width: 5,color: white))
     ),
     tabBarTheme: const TabBarTheme(
+      
+      labelColor: white,
       unselectedLabelStyle: TextStyle(
         fontSize: 16,
-        color: blue,
+        
         fontWeight: FontWeight.w700
 
       ),
@@ -97,7 +100,7 @@ class Apptheme {
       unselectedLabelColor: blue,
       labelStyle: TextStyle(
         fontSize: 16,
-        color: white,
+        
         fontWeight: FontWeight.w700
       )
     ),

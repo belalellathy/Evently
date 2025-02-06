@@ -1,5 +1,7 @@
 import 'package:evently/apptheme.dart';
 import 'package:evently/create_event.dart';
+import 'package:evently/editeventscreen.dart';
+import 'package:evently/eventdetails.dart';
 import 'package:evently/login_screen.dart';
 import 'package:evently/mainscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,7 +24,9 @@ class RUNAPP extends StatelessWidget {
       routes: {
         "Home": (context)=>const Login(),
         "mainscreen":(context)=>const Mainscreen(),
-        "CreateEvent":(context)=>const CreateEvent()
+        "CreateEvent":(context)=> CreateEvent(),
+        "Eventdetails":(context)=>const Eventdetails(),
+        "Edit Event":(context)=>const Editeventscreen()
       },
       theme: Apptheme.lightTheme,
       darkTheme: Apptheme.darkTheme,
