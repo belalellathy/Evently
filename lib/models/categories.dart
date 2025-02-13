@@ -4,14 +4,15 @@ class Category{
   String id;
   String name;
   IconData Icon;
-  String ImageName;
+  String ?ImageName;
   Category({
     required this.id,
     required this.name,
     required this.Icon,
-    required this.ImageName,
+    this.ImageName,
   });
   static List<Category>categories=[
+    Category(id: "0", name: "All", Icon: Icons.all_inclusive),
     Category(id: "1", name: "sports", Icon: Icons.sports_motorsports_sharp, ImageName: "sport"),
     Category(id: "2", name: "Birthday", Icon:Icons.cake, ImageName: "birthday"),
     Category(id: "3", name: "Meeting", Icon: Icons.laptop, ImageName: "meeting"),

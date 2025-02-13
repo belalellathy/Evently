@@ -1,6 +1,4 @@
 import 'package:evently/apptheme.dart';
-import 'package:evently/create_event.dart';
-import 'package:evently/eventdetails.dart';
 
 import 'package:evently/models/event.dart';
 import 'package:flutter/material.dart';

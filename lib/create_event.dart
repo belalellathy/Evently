@@ -16,7 +16,7 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  int currentindex=0;
+  int currentindex=1;
 
 
   final TextEditingController _title=TextEditingController();
@@ -53,13 +53,13 @@ class _CreateEventState extends State<CreateEvent> {
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: DefaultTabController(
-                    length: Category.categories.length,
+                    length: Category.categories.length-1,
                     child: TabBar(
                       
                       labelPadding: const EdgeInsets.symmetric(horizontal: 5),
                       padding: EdgeInsets.zero,
                       onTap: (index) {
-                        currentindex=index;
+                        currentindex=index+1;
                         setState(() {
                           
                         });
@@ -69,7 +69,8 @@ class _CreateEventState extends State<CreateEvent> {
                       tabAlignment: TabAlignment.start,
                       isScrollable: true,
                       tabs: 
-                        Category.categories.map((category)=>TabItem(categories: category,iselected:currentindex==Category.categories.indexOf(category) ,)).toList()
+                        Category.categories.skip(1).
+                        map((category)=>TabItem(categories: category,iselected:currentindex==Category.categories.indexOf(category) ,)).toList()
                     
                         
                       
@@ -246,11 +247,12 @@ class _CreateEventState extends State<CreateEvent> {
     if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null){
       DateTime dateTime=DateTime(selecteddate!.year,selecteddate!.month,selecteddate!.day,selectedtime!.hour,selectedtime!.minute);
       Event newevent=Event(title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
-      FirebaseService.addEventToFirestore(newevent);
-      Navigator.of(context).pushNamed("mainscreen");
+      FirebaseService.addEventToFirestore(newevent).then((_) {
+        Navigator.of(context).pop();
+      },).catchError((_){
+        print("failed");
+      });
     }
-    else{
-      return;
-    }
+    
   }
 }

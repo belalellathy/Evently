@@ -249,11 +249,12 @@ class _EditeventscreenState extends State<Editeventscreen> {
     if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null){
       DateTime dateTime=DateTime(selecteddate!.year,selecteddate!.month,selecteddate!.day,selectedtime!.hour,selectedtime!.minute);
       Event newevent=Event(id:eventid, title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
-      FirebaseService.overwriteEvent(newevent);
-      Navigator.of(context).pushNamed("mainscreen");
-    }
-    else{
-      return;
+      FirebaseService.overwriteEvent(newevent).then((_) {
+        Navigator.of(context).pushNamed("mainscreen");
+      },).catchError((_){
+        print("failed");
+      });
+      
     }
   }
 }

@@ -1,7 +1,9 @@
 import 'package:evently/apptheme.dart';
 import 'package:evently/models/categories.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -14,7 +16,7 @@ class _HomeHeaderState extends State<HomeHeader> {
   int currentindex=0;
   @override
   Widget build(BuildContext context) {
-    
+    EventProvider eventProvider=Provider.of<EventProvider>(context);
     TextTheme textTheme= Theme.of(context).textTheme;
     return Container(
       width: double.infinity,
@@ -37,10 +39,9 @@ class _HomeHeaderState extends State<HomeHeader> {
                       padding: EdgeInsets.zero,
                       onTap: (index) {
                         currentindex=index;
+                        eventProvider.changeselectedcategory(Category.categories[index]);
                     
-                        setState(() {
-                          
-                        });
+                        
                       } ,
                       indicatorColor: Colors.transparent,
                       dividerColor: Colors.transparent,

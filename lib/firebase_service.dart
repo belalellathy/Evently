@@ -24,9 +24,14 @@ class FirebaseService{
     
 
   }
-  static Future<List<Event>>geteventsfromfirestor()async{
+  static Future<List<Event>>geteventsfromfirestor(String? categoryID)async{
     CollectionReference<Event>eventscollection=geteventscollection();
-    QuerySnapshot<Event>querySnapshot=await eventscollection.get();
+    late QuerySnapshot<Event>querySnapshot;
+    if(categoryID!=null&&categoryID!="0"){
+     querySnapshot= await eventscollection.where("categoryID",isEqualTo: categoryID).get();
+    }else{
+        querySnapshot= await eventscollection.get();
+    }
     return querySnapshot.docs.map((docsnapshot)=>docsnapshot.data()).toList();
 
   }
