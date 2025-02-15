@@ -3,8 +3,10 @@ import 'package:evently/apptheme.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/models/categories.dart';
 import 'package:evently/models/event.dart';
+import 'package:evently/providers/settings_provide.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateEvent extends StatefulWidget {
   const CreateEvent({super.key});
@@ -29,6 +31,7 @@ class _CreateEventState extends State<CreateEvent> {
   String?_errorText_descriptionn;
   @override
   Widget build(BuildContext context) {
+    SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context);
       TextTheme textTheme= Theme.of(context).textTheme;
     return SafeArea(
       child: Scaffold(
@@ -56,6 +59,7 @@ class _CreateEventState extends State<CreateEvent> {
                     length: Category.categories.length-1,
                     child: TabBar(
                       
+                      
                       labelPadding: const EdgeInsets.symmetric(horizontal: 5),
                       padding: EdgeInsets.zero,
                       onTap: (index) {
@@ -70,7 +74,9 @@ class _CreateEventState extends State<CreateEvent> {
                       isScrollable: true,
                       tabs: 
                         Category.categories.skip(1).
-                        map((category)=>TabItem(categories: category,iselected:currentindex==Category.categories.indexOf(category) ,)).toList()
+                        map((category)=>TabItem(categories: category,iselected:currentindex==Category.categories.indexOf(category) ,
+                      )
+                        ).toList()
                     
                         
                       
@@ -98,7 +104,7 @@ class _CreateEventState extends State<CreateEvent> {
                 const SizedBox(height: 16,),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
-                  child: Text("Description",style: Apptheme.lightTheme.textTheme.headlineMedium),
+                  child: Text("Description",style: Apptheme.lightTheme.textTheme.headlineMedium?.copyWith(color:settingsProvider.isDark ? Apptheme.white:Apptheme.black)),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -124,7 +130,7 @@ class _CreateEventState extends State<CreateEvent> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
                         children: [
-                          const Icon(Icons.date_range_sharp),
+                           Icon(Icons.date_range_sharp,color: settingsProvider.isDark?Apptheme.white :Apptheme.black,),
                           const SizedBox(width: 10,),
                           Text("Event Date",style: textTheme.headlineMedium),
                           const Spacer(),
@@ -166,7 +172,7 @@ class _CreateEventState extends State<CreateEvent> {
                       padding: const EdgeInsets.symmetric(horizontal:  16.0),
                       child: Row(
                         children: [
-                          const Icon(Icons.timer_sharp),
+                          Icon(Icons.timer_sharp,color: settingsProvider.isDark?Apptheme.white :Apptheme.black,),
                           const SizedBox(width: 10,),
                           Text("Event Time",style: textTheme.headlineMedium),
                           const Spacer(),

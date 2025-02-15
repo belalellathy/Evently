@@ -5,7 +5,7 @@ import 'package:evently/models/categories.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Editeventscreen extends StatefulWidget {
   const Editeventscreen({super.key});
 
@@ -16,7 +16,7 @@ class Editeventscreen extends StatefulWidget {
 }
 
 class _EditeventscreenState extends State<Editeventscreen> {
-  int currentindex=0;
+  int currentindex=1;
 
 
   final TextEditingController _title=TextEditingController();
@@ -36,7 +36,7 @@ class _EditeventscreenState extends State<Editeventscreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Edit Event", ),
+          title:  Text(AppLocalizations.of(context)!.eventDetails, ),
         
         ),
         body: SizedBox(
@@ -56,13 +56,13 @@ class _EditeventscreenState extends State<Editeventscreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: DefaultTabController(
-                    length: Category.categories.length,
+                    length: Category.categories.length-1,
                     child: TabBar(
                       
                       labelPadding: const EdgeInsets.symmetric(horizontal: 5),
                       padding: EdgeInsets.zero,
                       onTap: (index) {
-                        currentindex=index;
+                        currentindex=index+1;
                         setState(() {
                           
                         });
@@ -72,7 +72,8 @@ class _EditeventscreenState extends State<Editeventscreen> {
                       tabAlignment: TabAlignment.start,
                       isScrollable: true,
                       tabs: 
-                        Category.categories.map((category)=>TabItem(categories: category,iselected:currentindex==Category.categories.indexOf(category) ,)).toList()
+                        Category.categories.skip(1)
+                        .map((category)=>TabItem(categories: category,iselected:currentindex==Category.categories.indexOf(category) ,)).toList()
                     
                         
                       
@@ -87,6 +88,7 @@ class _EditeventscreenState extends State<Editeventscreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
                     controller: _title,
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: event.title,
                       errorText: _errorText_title,
@@ -150,7 +152,7 @@ class _EditeventscreenState extends State<Editeventscreen> {
                                 
                             },
                             child:selecteddate!=null? Text("${selecteddate!.day}/${selecteddate!.month}/${selecteddate!.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ),):
-                             Text("${event.date.day}/${event.date.month}/${event.date.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
+                            Text("${event.date.day}/${event.date.month}/${event.date.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))
                       
                         ],
                       ),

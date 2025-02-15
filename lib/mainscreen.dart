@@ -6,6 +6,7 @@ import 'package:evently/tabs/maps/maps.dart';
 import 'package:evently/tabs/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Mainscreen extends StatefulWidget {
   const Mainscreen({super.key});
@@ -17,10 +18,10 @@ State<Mainscreen> createState() => _MainscreenState();
 class _MainscreenState extends State<Mainscreen> {
 int selectindex=0;
 List<Widget>tabs=[
-  const Home(),
-  const Maps(),
-  const Love(),
-  const Profile()
+    Home(),
+    Maps(),
+    Love(),
+    Profile()
 ];
 @override
 Widget build(BuildContext context) {
@@ -52,8 +53,8 @@ Widget build(BuildContext context) {
             });
             }, items: [ 
                 BottomNavigationBarItem(icon:SvgPicture.asset("assets/Svg/Home 1.svg"),
-                label: "home"),
-                BottomNavigationBarItem(icon:SvgPicture.asset("assets/Svg/Vector.svg"),label: "maps",
+                label: AppLocalizations.of(context)!.home),
+                BottomNavigationBarItem(icon:SvgPicture.asset("assets/Svg/Vector.svg"),label: AppLocalizations.of(context)!.maps,
                 activeIcon: Container(
                 
                     
@@ -61,8 +62,8 @@ Widget build(BuildContext context) {
                     )
                     )
                     ),
-                BottomNavigationBarItem(icon:SvgPicture.asset("assets/Svg/Heart.svg"),label: "Love"),
-                BottomNavigationBarItem(icon:SvgPicture.asset("assets/Svg/User_01.svg"),label: "Profile"),
+                BottomNavigationBarItem(icon:SvgPicture.asset("assets/Svg/Heart.svg"),label:AppLocalizations.of(context)!.love),
+                BottomNavigationBarItem(icon:SvgPicture.asset("assets/Svg/User_01.svg"),label: AppLocalizations.of(context)!.profile),
             
             ],
             

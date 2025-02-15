@@ -7,7 +7,26 @@ class Apptheme {
   static const Color white=Colors.white;
 
   static ThemeData darkTheme =ThemeData(
+        tabBarTheme: const TabBarTheme(
+      
+      labelColor: white,
+      
+      unselectedLabelStyle: TextStyle(
+        fontSize: 16,
+        
+        fontWeight: FontWeight.w700
+
+      ),
+      
+      unselectedLabelColor: primarydark,
+      labelStyle: TextStyle(
+        fontSize: 16,
+        
+        fontWeight: FontWeight.w700
+      )
+    ),
       inputDecorationTheme: InputDecorationTheme(
+        
       hintStyle: const TextStyle(
         color: white,
         fontSize: 14,

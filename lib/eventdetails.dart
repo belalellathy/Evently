@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/apptheme.dart';
 import 'package:evently/models/event.dart';
+import 'package:evently/providers/settings_provide.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Eventdetails extends StatefulWidget {
   const Eventdetails({super.key});
@@ -14,6 +16,7 @@ class Eventdetails extends StatefulWidget {
 class _EventdetailsState extends State<Eventdetails> {
   @override
   Widget build(BuildContext context) {
+    SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context);
     TextTheme textTheme= Theme.of(context).textTheme;
     Event event= ModalRoute.of(context)!.settings.arguments as Event;
     return Scaffold(
@@ -74,16 +77,16 @@ class _EventdetailsState extends State<Eventdetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(DateFormat('d MMMM yyyy').format(event.date),style: textTheme.bodyMedium?.copyWith(color: Apptheme.blue,fontWeight: FontWeight.w500) ,),
-                          Text("${event.date.hour}:${event.date.minute}",style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),)
+                          Text("${event.date.hour}:${event.date.minute}",style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500,color:settingsProvider.isDark?Apptheme.white :Apptheme.black ),)
                         ],
                       )
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
+              SizedBox(height: 16,),
               Text("Description",style: textTheme.headlineMedium,),
-              Text(event.description,style: textTheme.bodyLarge,)
+              Text(event.description,style: textTheme.bodyLarge?.copyWith(color: settingsProvider.isDark?Apptheme.white :Apptheme.black),)
             ],
           ),
         ),
