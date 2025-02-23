@@ -1,0 +1,11 @@
+{
+    "home":"home",
+    "maps":"maps",
+    "love":"Love",
+    "profile":"Profile",
+    "theme":"Theme",
+    "logout":"Logout",
+    "language":"language",
+    "eventDetails":"Event details",
+    "welcomeBack":"Welcome Back"
+}
