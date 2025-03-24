@@ -2,6 +2,7 @@ import 'package:evently/apptheme.dart';
 import 'package:evently/models/categories.dart';
 import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/settings_provide.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,40 +25,44 @@ class _HomeHeaderState extends State<HomeHeader> {
     TextTheme textTheme= Theme.of(context).textTheme;
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height*0.2,
+      height: MediaQuery.of(context).size.height*0.15,
       decoration:  BoxDecoration(
         color:settingsProvider.isDark?Apptheme.primarydark : Apptheme.blue,
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16),bottomRight: Radius.circular(16))
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16))
 
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(AppLocalizations.of(context)!.welcomeBack,style: textTheme.headlineMedium?.copyWith(color: Apptheme.white),),
+          Text(Provider.of<UserProvider>(context,listen: false).currentuser!.name,style: textTheme.headlineLarge?.copyWith(color: Apptheme.white),),
           const Spacer(),
-            DefaultTabController(
-                    length: Category.categories.length,
-                    child: TabBar(
-                      
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: EdgeInsets.zero,
-                      onTap: (index) {
-                        currentindex=index;
-                        eventProvider.changeselectedcategory(Category.categories[index]);
-                    
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 8),
+              child: DefaultTabController(
+                      length: Category.categories.length,
+                      child: TabBar(
                         
-                      } ,
-                      indicatorColor: Colors.transparent,
-                      dividerColor: Colors.transparent,
-                      tabAlignment: TabAlignment.start,
-                      isScrollable: true,
-                      tabs: 
-                        Category.categories.map((category)=>TabItem(categories: category,iselected:currentindex==Category.categories.indexOf(category) ,)).toList()
-                    
-                        
+                        labelPadding: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: EdgeInsets.zero,
+                        onTap: (index) {
+                          currentindex=index;
+                          eventProvider.changeselectedcategory(Category.categories[index]);
                       
+                          
+                        } ,
+                        indicatorColor: Colors.transparent,
+                        dividerColor: Colors.transparent,
+                        tabAlignment: TabAlignment.start,
+                        isScrollable: true,
+                        tabs: 
+                          Category.categories.map((category)=>TabItem(categories: category,iselected:currentindex==Category.categories.indexOf(category) ,)).toList()
+                      
+                          
+                        
+                      ),
                     ),
-                  ),
+            ),
           
         ],
       ),

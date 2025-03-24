@@ -4,6 +4,7 @@ import 'package:evently/firebase_service.dart';
 import 'package:evently/models/categories.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/providers/settings_provide.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -252,7 +253,9 @@ class _CreateEventState extends State<CreateEvent> {
     });
     if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null){
       DateTime dateTime=DateTime(selecteddate!.year,selecteddate!.month,selecteddate!.day,selectedtime!.hour,selectedtime!.minute);
-      Event newevent=Event(title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
+      Event newevent=Event(
+        userid: Provider.of<UserProvider>(context,listen: false).currentuser!.id,
+        title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
       FirebaseService.addEventToFirestore(newevent).then((_) {
         Navigator.of(context).pop();
       },).catchError((_){
