@@ -3,9 +3,11 @@ import 'package:evently/apptheme.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/models/categories.dart';
 import 'package:evently/models/event.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 class Editeventscreen extends StatefulWidget {
   const Editeventscreen({super.key});
 
@@ -250,7 +252,9 @@ class _EditeventscreenState extends State<Editeventscreen> {
     });
     if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null){
       DateTime dateTime=DateTime(selecteddate!.year,selecteddate!.month,selecteddate!.day,selectedtime!.hour,selectedtime!.minute);
-      Event newevent=Event(id:eventid, title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
+      Event newevent=Event(
+         userid: Provider.of<UserProvider>(context,listen: false).currentuser!.id,
+        id:eventid, title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
       FirebaseService.overwriteEvent(newevent).then((_) {
         Navigator.of(context).pushNamed("mainscreen");
       },).catchError((_){

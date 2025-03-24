@@ -1,0 +1,2 @@
+D:/Code/Evently/android/app/.cxx/Debug/6l5q4c5t/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Code/Evently/android/app/.cxx/Debug/6l5q4c5t/armeabi-v7a/CMakeFiles/rebuild_cache.dir

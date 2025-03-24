@@ -1,5 +1,7 @@
 import 'package:evently/apptheme.dart';
+import 'package:evently/firebase_service.dart';
 import 'package:evently/providers/settings_provide.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +43,7 @@ class Profile extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.center,
-                child: Text("Belal",style: textTheme.titleMedium?.copyWith(color: Apptheme.white),))
+                child: Text(Provider.of<UserProvider>(context,listen: false).currentuser!.name,style: textTheme.headlineLarge?.copyWith(color: Apptheme.white),))
               ]
               )
         ),
@@ -102,7 +104,11 @@ class Profile extends StatelessWidget {
               child: SizedBox(
                 
                     width: double.infinity,
-                    child: ElevatedButton(onPressed: (){}, 
+                    child: ElevatedButton(onPressed: (){
+                      FirebaseService.logout();
+                      Provider.of<UserProvider>(context,listen: false).UpdateCurrentUser(null);
+                      Navigator.of(context).pushReplacementNamed("Home");
+                    }, 
                     
                     style: ElevatedButton.styleFrom(
                       
@@ -116,10 +122,10 @@ class Profile extends StatelessWidget {
                               
                                 
                               ), child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                
                                 children: [
                                   Icon(Icons.exit_to_app,color: Apptheme.white,),
-                                  
+                                  SizedBox(width: 20,),
                                    Text(AppLocalizations.of(context)!.logout,style:TextStyle(
                                     
                                     fontSize: 20,
