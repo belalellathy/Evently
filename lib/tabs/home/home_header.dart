@@ -25,7 +25,7 @@ class _HomeHeaderState extends State<HomeHeader> {
     TextTheme textTheme= Theme.of(context).textTheme;
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height*0.15,
+      height: MediaQuery.of(context).size.height*0.2,
       decoration:  BoxDecoration(
         color:settingsProvider.isDark?Apptheme.primarydark : Apptheme.blue,
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16))
