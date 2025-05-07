@@ -91,7 +91,9 @@ class _CreateEventState extends State<CreateEvent> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
+                    style: TextStyle(color: settingsProvider.isDark?Apptheme.white:Apptheme.black),
                     controller: _title,
+                       onTapOutside: (_) =>FocusManager.instance.primaryFocus?.unfocus(),
                     decoration: InputDecoration(
                       hintText: "Event Title",
                       errorText: _errorText_title,
@@ -110,8 +112,10 @@ class _CreateEventState extends State<CreateEvent> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
+                    style: TextStyle(color: settingsProvider.isDark?Apptheme.white:Apptheme.black),
                     maxLines: 4,
                     controller: _description,
+                    onTapOutside: (_) =>FocusManager.instance.primaryFocus?.unfocus() ,
                       decoration: InputDecoration(
                       hintText: "Event Description",
                       errorText: _errorText_descriptionn,

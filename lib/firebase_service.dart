@@ -67,4 +67,14 @@ class FirebaseService{
   static Future<void> logout()async{
     await FirebaseAuth.instance.signOut();
   }
+  static Future<void> addToFav(String eventid)async{
+    CollectionReference<Usermodel>userscollection=getuserscollection();
+    userscollection.doc(FirebaseAuth.instance.currentUser!.uid).update({"favEvents":FieldValue.arrayUnion([eventid])});
+    
+  }
+  static Future<void> removeFromFav(String eventid)async{
+    CollectionReference<Usermodel>userscollection=getuserscollection();
+    userscollection.doc(FirebaseAuth.instance.currentUser!.uid).update({"favEvents":FieldValue.arrayRemove([eventid])});
+    
+  }
 }
