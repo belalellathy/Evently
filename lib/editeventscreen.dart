@@ -111,6 +111,7 @@ class _EditeventscreenState extends State<Editeventscreen> {
                   child: TextFormField(
                     maxLines: 4,
                     controller: _description,
+                    
                       decoration: InputDecoration(
                       hintText: event.description,
                       errorText: _errorText_descriptionn,

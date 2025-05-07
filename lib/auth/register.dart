@@ -123,6 +123,7 @@ bool _validatepass(){
                     Container(
                       padding:  EdgeInsets.all(10),
                       child: TextFormField(
+                        style: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
                                   controller: _Nametext,
                                 
                                   decoration:InputDecoration(
@@ -141,6 +142,7 @@ bool _validatepass(){
                     Container(
                       padding:  EdgeInsets.all(10),
                       child: TextFormField(
+                        style: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
                                   controller: _text,
                                 
                                   decoration:InputDecoration(
@@ -160,6 +162,7 @@ bool _validatepass(){
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: TextFormField(
+                        style: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
                                   controller: _password,
                                   
                                   obscureText:_isObscured,

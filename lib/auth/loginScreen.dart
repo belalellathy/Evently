@@ -105,11 +105,13 @@ bool _validatepass(){
                     Container(
                       padding:  EdgeInsets.all(10),
                       child: TextFormField(
+                        style: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
                         
                                   controller: _text,
                                 
                                   decoration:InputDecoration(
                                     labelStyle: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
+                                     
                                     prefixIcon: Icon(Icons.email,color: settingsProvider.isDark?Colors.white:Colors.black,),
                       border:OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -125,6 +127,7 @@ bool _validatepass(){
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: TextFormField(
+                            style: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
                                   controller: _password,
                                   
                                   obscureText:_isObscured,
@@ -136,6 +139,7 @@ bool _validatepass(){
                       suffixIcon: IconButton(onPressed: (){
                         setState(() {
                           _isObscured=!_isObscured;
+                        
                         });
                       }, 
                       icon: Icon(
