@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/apptheme.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/providers/settings_provide.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -17,17 +18,20 @@ class _EventdetailsState extends State<Eventdetails> {
   @override
   Widget build(BuildContext context) {
     SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context);
+    UserProvider userProvider=Provider.of<UserProvider>(context);
+    
     TextTheme textTheme= Theme.of(context).textTheme;
     Event event= ModalRoute.of(context)!.settings.arguments as Event;
     return Scaffold(
       appBar: AppBar(
           title: const Text("Event Details", ),
-          actions: [
+        
+          actions: (userProvider.currentuser != null && userProvider.currentuser!.id==event.userid) ? [
             IconButton(onPressed: (){
               Navigator.of(context).pushNamed("Edit Event",
         arguments: event);
 
-            }, 
+            },
             icon: const Icon(Icons.edit)),
             IconButton(onPressed: (){
               FirebaseFirestore.instance.collection('events').doc(event.id).delete();
@@ -38,7 +42,7 @@ class _EventdetailsState extends State<Eventdetails> {
               });
             }, 
             icon: const Icon(Icons.delete),color: Colors.red,)
-          ],
+          ]:null,
         
         ),
         body: Padding(
@@ -84,7 +88,7 @@ class _EventdetailsState extends State<Eventdetails> {
                   ),
                 ),
               ),
-              SizedBox(height: 16,),
+              const SizedBox(height: 16,),
               Text("Description",style: textTheme.headlineMedium,),
               Text(event.description,style: textTheme.bodyLarge?.copyWith(color: settingsProvider.isDark?Apptheme.white :Apptheme.black),)
             ],

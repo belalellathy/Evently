@@ -7,7 +7,7 @@ class Apptheme {
   static const Color white=Colors.white;
 
   static ThemeData darkTheme =ThemeData(
-        tabBarTheme: const TabBarTheme(
+        tabBarTheme: const TabBarThemeData(
       
       labelColor: white,
       
@@ -106,7 +106,7 @@ class Apptheme {
       foregroundColor: white,
       shape: CircleBorder(side: BorderSide(width: 5,color: white))
     ),
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       
       labelColor: white,
       unselectedLabelStyle: TextStyle(

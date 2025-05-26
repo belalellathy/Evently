@@ -5,7 +5,7 @@ import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:evently/l10n/app_localizations.dart';
 class Profile extends StatelessWidget {
     Profile({super.key});
   List<language>languagecode=[
@@ -47,7 +47,7 @@ class Profile extends StatelessWidget {
               ]
               )
         ),
-        SizedBox(height: 24,),
+        const SizedBox(height: 24,),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
@@ -65,7 +65,7 @@ class Profile extends StatelessWidget {
         })
           ],
         ),
-        SizedBox(height: 24,),
+        const SizedBox(height: 24,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
@@ -77,8 +77,9 @@ class Profile extends StatelessWidget {
                   value:settingsProvider.lang_code,
                   items:languagecode.map((language)=>DropdownMenuItem(
                   
-                  child: Text(language.name,style:textTheme.bodyLarge?.copyWith(color: Apptheme.blue) ,),
                   value:language.code ,
+                  
+                  child: Text(language.name,style:textTheme.bodyLarge?.copyWith(color: Apptheme.blue) ,),
                   )
                   ).toList() , onChanged: (language){
                     if(language!=null){
@@ -95,9 +96,9 @@ class Profile extends StatelessWidget {
           ),
         ),
         
-        Spacer(),
+        const Spacer(),
           Container(
-            margin: EdgeInsets.only(bottom: 40),
+            margin: const EdgeInsets.only(bottom: 40),
             child: Padding(
               
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -124,9 +125,9 @@ class Profile extends StatelessWidget {
                               ), child: Row(
                                 
                                 children: [
-                                  Icon(Icons.exit_to_app,color: Apptheme.white,),
-                                  SizedBox(width: 20,),
-                                   Text(AppLocalizations.of(context)!.logout,style:TextStyle(
+                                  const Icon(Icons.exit_to_app,color: Apptheme.white,),
+                                  const SizedBox(width: 20,),
+                                   Text(AppLocalizations.of(context)!.logout,style:const TextStyle(
                                     
                                     fontSize: 20,
                                     color: Colors.white

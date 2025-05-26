@@ -147,16 +147,12 @@ class _CreateEventState extends State<CreateEvent> {
                                 initialEntryMode: DatePickerEntryMode.calendarOnly,
                                 
                                 );
-                                if(date!=null){
-                                  selecteddate=date;
-                                  _errorText_date=null;
-                                  setState(() {
-                                    
-                                  });
-                                }else{
-                                  _errorText_date="please choose date";
-                                }
-                                
+                                selecteddate=date;
+                                _errorText_date=null;
+                                setState(() {
+                                  
+                                });
+                                                              
                             },
                             child:selecteddate!=null? Text("${selecteddate!.day}/${selecteddate!.month}/${selecteddate!.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ),):
                              Text("Choose date",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))

@@ -85,7 +85,7 @@ class _ItemCardState extends State<ItemCard> {
                           setState(() {
                             
                           });
-                        }, icon:isfav? Icon(Icons.favorite,color: settingsProvider.isDark?Apptheme.white : Apptheme.blue): SvgPicture.asset("assets/Svg/Heart.svg",colorFilter: settingsProvider.isDark? ColorFilter.mode(Apptheme.white, BlendMode.srcIn):const ColorFilter.mode(Apptheme.blue, BlendMode.srcIn),))
+                        }, icon:isfav? Icon(Icons.favorite,color: settingsProvider.isDark?Apptheme.white : Apptheme.blue): SvgPicture.asset("assets/Svg/Heart.svg",colorFilter: settingsProvider.isDark? const ColorFilter.mode(Apptheme.white, BlendMode.srcIn):const ColorFilter.mode(Apptheme.blue, BlendMode.srcIn),))
                       ],
                     ),
                   ),

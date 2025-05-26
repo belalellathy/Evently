@@ -6,7 +6,7 @@ import 'package:evently/tabs/maps/maps.dart';
 import 'package:evently/tabs/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:evently/l10n/app_localizations.dart';
 
 class Mainscreen extends StatefulWidget {
   const Mainscreen({super.key});
@@ -18,9 +18,9 @@ State<Mainscreen> createState() => _MainscreenState();
 class _MainscreenState extends State<Mainscreen> {
 int selectindex=0;
 List<Widget>tabs=[
-    Home(),
-    Maps(),
-    Love(),
+    const Home(),
+    const Maps(),
+     Love(),
     Profile()
 ];
 @override

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
+  const Register({super.key});
+
 
   @override
   State<Register> createState() => RegisterState();
@@ -111,7 +113,7 @@ bool _validatepass(){
     return Scaffold(
       body: SafeArea(child: ListView(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
@@ -121,7 +123,7 @@ bool _validatepass(){
                   child: Column(
                   children: [
                     Container(
-                      padding:  EdgeInsets.all(10),
+                      padding:  const EdgeInsets.all(10),
                       child: TextFormField(
                         style: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
                                   controller: _Nametext,
@@ -140,7 +142,7 @@ bool _validatepass(){
                                 ),
                     ),
                     Container(
-                      padding:  EdgeInsets.all(10),
+                      padding:  const EdgeInsets.all(10),
                       child: TextFormField(
                         style: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
                                   controller: _text,
@@ -191,7 +193,7 @@ bool _validatepass(){
                       
                                 ),
                     ),
-                  SizedBox(height: 8,),
+                  const SizedBox(height: 8,),
                   
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -234,12 +236,12 @@ bool _validatepass(){
                     TextButton(onPressed: (){
                       Navigator.of(context).pop();
                     },
-                      child: Text("Login",style: TextStyle(
+                      child: const Text("Login",style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: const Color(0xff1877F2),
+                      color: Color(0xff1877F2),
                       decoration: TextDecoration.underline,
-                      decorationColor: const Color(0xff1877F2),),
+                      decorationColor: Color(0xff1877F2),),
                       )
                       )
                   ],

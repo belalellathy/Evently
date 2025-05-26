@@ -6,7 +6,7 @@ import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:evently/l10n/app_localizations.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -28,7 +28,7 @@ class _HomeHeaderState extends State<HomeHeader> {
       height: MediaQuery.of(context).size.height*0.2,
       decoration:  BoxDecoration(
         color:settingsProvider.isDark?Apptheme.primarydark : Apptheme.blue,
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16))
+        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(16))
 
       ),
       child: Column(
@@ -38,7 +38,7 @@ class _HomeHeaderState extends State<HomeHeader> {
           Text(Provider.of<UserProvider>(context,listen: false).currentuser!.name,style: textTheme.headlineLarge?.copyWith(color: Apptheme.white),),
           const Spacer(),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 8),
+              margin: const EdgeInsets.symmetric(vertical: 8),
               child: DefaultTabController(
                       length: Category.categories.length,
                       child: TabBar(

@@ -6,7 +6,7 @@ import 'package:evently/models/event.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:evently/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 class Editeventscreen extends StatefulWidget {
   const Editeventscreen({super.key});
@@ -90,7 +90,7 @@ class _EditeventscreenState extends State<Editeventscreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
                     controller: _title,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: event.title,
                       errorText: _errorText_title,
@@ -143,16 +143,12 @@ class _EditeventscreenState extends State<Editeventscreen> {
                                 initialEntryMode: DatePickerEntryMode.calendarOnly,
                                 
                                 );
-                                if(date!=null){
-                                  selecteddate=date;
-                                  _errorText_date=null;
-                                  setState(() {
-                                    
-                                  });
-                                }else{
-                                  _errorText_date="please choose date";
-                                }
-                                
+                                selecteddate=date;
+                                _errorText_date=null;
+                                setState(() {
+                                  
+                                });
+                                                              
                             },
                             child:selecteddate!=null? Text("${selecteddate!.day}/${selecteddate!.month}/${selecteddate!.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ),):
                             Text("${event.date.day}/${event.date.month}/${event.date.year}",style: textTheme.headlineMedium?.copyWith(color:Apptheme.blue ) ,))

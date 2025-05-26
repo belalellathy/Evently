@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
 
   @override
   State<LoginScreen> createState() => LoginScreenState();
@@ -25,37 +27,7 @@ bool _validatepass(){
       _passerror="please enter your password";
     });
     return false;
-  }else if(!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))){
-    setState(() {
-      _passerror="Password should contain special chracter";
-    });
-    return false;
-  }else if(!password.contains(RegExp(r'[A-Z]'))){
-    setState(() {
-      _passerror="password should contain uppercase character";
-    });
-    return false;
   }
-  else if(!password.contains(RegExp(r'[a-z]'))){
-    setState(() {
-      _passerror="password should contain lowercase character";
-    });
-    return false;
-  }
-  else if(!password.contains(RegExp(r'[\d]'))){
-    setState(() {
-      _passerror="password should contain numbers";
-    });
-    return false;
-  }
-  else if(password.length<8){
-    setState(() {
-      _passerror="password should be 8 chracters or more";
-    });
-    return false;
-  }
-
-
   else{
     _passerror=null;
     return true;
@@ -67,11 +39,6 @@ bool _validatepass(){
       
       setState(() {
         _errorText="please enter your email";
-      });
-      return false;
-    }else if(!email.endsWith("gmail.com")){
-      setState(() {
-        _errorText="please enter valid email address";
       });
       return false;
     }else {
@@ -93,7 +60,7 @@ bool _validatepass(){
     return Scaffold(
       body: SafeArea(child: ListView(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
@@ -103,7 +70,7 @@ bool _validatepass(){
                   child: Column(
                   children: [
                     Container(
-                      padding:  EdgeInsets.all(10),
+                      padding:  const EdgeInsets.all(10),
                       child: TextFormField(
                         style: TextStyle(color: settingsProvider.isDark?Colors.white:Colors.black),
                         
@@ -157,7 +124,7 @@ bool _validatepass(){
                       
                                 ),
                     ),
-                  SizedBox(height: 8,),
+                  const SizedBox(height: 8,),
                   Align(
                     alignment: Alignment.centerRight,
                   child: TextButton(onPressed: (){}, child: const Text("Forget Password?",style: TextStyle(
@@ -209,12 +176,12 @@ bool _validatepass(){
                     TextButton(onPressed: (){
                       Navigator.of(context).pushNamed("register");
                     },
-                      child: Text("Create Account",style: TextStyle(
+                      child: const Text("Create Account",style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: const Color(0xff1877F2),
+                      color: Color(0xff1877F2),
                       decoration: TextDecoration.underline,
-                      decorationColor: const Color(0xff1877F2),),
+                      decorationColor: Color(0xff1877F2),),
                       )
                       )
                   ],
@@ -235,7 +202,22 @@ bool _validatepass(){
       FirebaseService.login( email: _text.text, password: _password.text).then((user){
         Provider.of<UserProvider>(context,listen: false).UpdateCurrentUser(user);
         Navigator.of(context).pushReplacementNamed("mainscreen");
+      
       }).catchError((error){
+            ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 3),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          content: Text("invalid email or password",style: TextStyle(
+            color: Colors.white,
+            fontSize: 16
+          ),),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+        ),
+      );
         print(error);
       });
     }

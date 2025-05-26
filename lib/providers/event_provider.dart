@@ -2,7 +2,6 @@ import 'package:evently/firebase_service.dart';
 import 'package:evently/models/categories.dart';
 import 'package:evently/models/event.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class EventProvider with ChangeNotifier{
   List<Event>events=[];

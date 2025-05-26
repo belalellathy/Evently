@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/models/event.dart';
 import 'package:evently/models/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class FirebaseService{
   static CollectionReference<Event>geteventscollection(){
