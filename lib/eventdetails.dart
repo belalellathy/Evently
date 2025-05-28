@@ -26,7 +26,7 @@ class _EventdetailsState extends State<Eventdetails> {
       appBar: AppBar(
           title: const Text("Event Details", ),
         
-          actions: (userProvider.currentuser != null && userProvider.currentuser!.id==event.userid) ? [
+          actions: userProvider.currentuser!.id==event.userid ? [
             IconButton(onPressed: (){
               Navigator.of(context).pushNamed("Edit Event",
         arguments: event);
