@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsProvide with ChangeNotifier{
   ThemeMode themeMode= ThemeMode.system;
@@ -11,13 +12,40 @@ class SettingsProvide with ChangeNotifier{
   }
   return themeMode == ThemeMode.dark;}
  
-  void changetheme(ThemeMode theme){
-  themeMode=theme;
+  Future <void> changetheme(ThemeMode theme)async{
+    themeMode=theme;
+  SharedPreferences pref=await SharedPreferences.getInstance();
+  await pref.setString('theme', theme.toString());
   notifyListeners();
 }
 
-void changelanguage(String language){
+Future <void> changelanguage(String language)async{
 lang_code=language;
+SharedPreferences pref=await SharedPreferences.getInstance() ;
+ await pref.setString('lang', language);
+
 notifyListeners();
 }
+  Future<void> loadSettings() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? savedTheme = pref.getString('theme');
+    String? savedLang = pref.getString('lang');
+
+    if (savedTheme != null) {
+      if (savedTheme == ThemeMode.light.toString()) {
+        themeMode = ThemeMode.light;
+      } else if (savedTheme == ThemeMode.dark.toString()) {
+        themeMode = ThemeMode.dark;
+      } else {
+        themeMode = ThemeMode.system;
+      }
+    }
+
+    if (savedLang != null) {
+      lang_code = savedLang;
+    }
+
+    notifyListeners();
+  }
+  
 }

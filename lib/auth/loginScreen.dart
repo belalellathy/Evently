@@ -201,6 +201,7 @@ bool _validatepass(){
     if(_validateemail()&&_validatepass()){
       FirebaseService.login( email: _text.text, password: _password.text).then((user){
         Provider.of<UserProvider>(context,listen: false).UpdateCurrentUser(user);
+     
         Navigator.of(context).pushReplacementNamed("mainscreen");
       
       }).catchError((error){

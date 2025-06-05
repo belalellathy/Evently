@@ -33,6 +33,7 @@ class RUNAPP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context);
+    settingsProvider.loadSettings();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
