@@ -4,6 +4,7 @@ import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/settings_provide.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:evently/l10n/app_localizations.dart';
@@ -15,7 +16,13 @@ class HomeHeader extends StatefulWidget {
   State<HomeHeader> createState() => _HomeHeaderState();
 }
 
+
 class _HomeHeaderState extends State<HomeHeader> {
+  @override
+void initState() {
+  super.initState();
+  Provider.of<SettingsProvide>(context, listen: false).getlocationname();
+}
 
   int currentindex=0;
   @override
@@ -36,6 +43,7 @@ class _HomeHeaderState extends State<HomeHeader> {
         children: [
           Text(AppLocalizations.of(context)!.welcomeBack,style: textTheme.headlineMedium?.copyWith(color: Apptheme.white),),
           Text(Provider.of<UserProvider>(context,listen: false).currentuser!.name,style: textTheme.headlineLarge?.copyWith(color: Apptheme.white),),
+          Text(settingsProvider.city+", "+settingsProvider.country,style: textTheme.bodyLarge?.copyWith(color: Apptheme.white),),
           const Spacer(),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),

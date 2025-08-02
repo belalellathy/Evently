@@ -62,6 +62,7 @@ class FirebaseService{
     CollectionReference<Usermodel>userscollection=getuserscollection();
     DocumentSnapshot<Usermodel>usersnapshot= await userscollection.doc(credential.user!.uid).get();
     return usersnapshot.data()!;
+    
   }
   static Future<void> logout()async{
     await FirebaseAuth.instance.signOut();
@@ -69,7 +70,7 @@ class FirebaseService{
   static Future<void> addToFav(String eventid)async{
     CollectionReference<Usermodel>userscollection=getuserscollection();
     userscollection.doc(FirebaseAuth.instance.currentUser!.uid).update({"favEvents":FieldValue.arrayUnion([eventid])});
-    
+
   }
   static Future<void> removeFromFav(String eventid)async{
     CollectionReference<Usermodel>userscollection=getuserscollection();

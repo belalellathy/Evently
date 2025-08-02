@@ -5,9 +5,12 @@ import 'package:evently/create_event.dart';
 import 'package:evently/editeventscreen.dart';
 import 'package:evently/eventdetails.dart';
 import 'package:evently/mainscreen.dart';
+import 'package:evently/models/usermodel.dart';
 import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/settings_provide.dart';
 import 'package:evently/providers/user_provider.dart';
+import 'package:evently/splash.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +35,14 @@ class RUNAPP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   UserProvider userProvider=Provider.of<UserProvider>(context);
+   userProvider.autologin();
+    Usermodel? user = userProvider.currentuser;
+    
+    //print( user);
+    
+    String initialRoute = 'splash';
+
     SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context);
     settingsProvider.loadSettings();
     return MaterialApp(
@@ -39,14 +50,16 @@ class RUNAPP extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(settingsProvider.lang_code),
-      initialRoute:"Home" ,
+      
+      initialRoute:initialRoute ,
       routes: {
         "Home": (context)=> LoginScreen(),
         "register": (context)=> Register(),
         "mainscreen":(context)=>const Mainscreen(),
         "CreateEvent":(context)=> const CreateEvent(),
         "Eventdetails":(context)=>const Eventdetails(),
-        "Edit Event":(context)=>const Editeventscreen()
+        "Edit Event":(context)=>const Editeventscreen(),
+        "splash":(context)=>const SplashScreen(),
 
       },
       theme: Apptheme.lightTheme,
@@ -54,4 +67,5 @@ class RUNAPP extends StatelessWidget {
       themeMode:settingsProvider.themeMode ,
     );
   }
+  
 }
