@@ -21,7 +21,7 @@ class CreateEvent extends StatefulWidget {
 
 class _CreateEventState extends State<CreateEvent> {
   int currentindex=1;
-String? eventlocationname;
+
   @override
   
 
@@ -57,6 +57,7 @@ String? eventlocationname;
                   
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset("assets/tabsimages/${Category.categories[currentindex].ImageName}.png")),
+                const SizedBox(height: 10,),
                 DefaultTabController(
                   length: Category.categories.length-1,
                   child: TabBar(
@@ -98,7 +99,7 @@ String? eventlocationname;
                     )
                   )
                 ),
-                const SizedBox(height: 16,),
+                const SizedBox(height: 10,),
                 Text("Description",style: Apptheme.lightTheme.textTheme.headlineMedium?.copyWith(color:settingsProvider.isDark ? Apptheme.white:Apptheme.black)),
                 TextFormField(
                   style: TextStyle(color: settingsProvider.isDark?Apptheme.white:Apptheme.black),
@@ -115,7 +116,7 @@ String? eventlocationname;
                 
                 
                 
-                const SizedBox(height: 16,),
+                const SizedBox(height: 10,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -199,7 +200,10 @@ String? eventlocationname;
                 const SizedBox(height: 10,),
                  InkWell(
                       onTap: () {
+                        
+
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const Eventlocation()));
+                       
                         // Handle location selection
                       },
                       child: Container(
@@ -266,6 +270,7 @@ String? eventlocationname;
     );
   }
   void _validatteinput(){
+    SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context,listen: false);
     setState(() {
       _errorText_descriptionn=_description.text.isEmpty?"Description can't be empty":null;
       _errorText_title=_title.text.isEmpty?"Title can't be empty":null;
@@ -273,16 +278,22 @@ String? eventlocationname;
       _errorText_time=selectedtime==null?"please pick time":null;
       
     });
-    if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null){
+    if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null&&settingsProvider.eventlocationname!=null){
       DateTime dateTime=DateTime(selecteddate!.year,selecteddate!.month,selecteddate!.day,selectedtime!.hour,selectedtime!.minute);
       Event newevent=Event(
+        location: settingsProvider.eventlocationname!,
         userid: Provider.of<UserProvider>(context,listen: false).currentuser!.id,
         title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
       FirebaseService.addEventToFirestore(newevent).then((_) {
         Navigator.of(context).pop();
       },).catchError((_){
-        print("failed");
+        SnackBar snackBar=SnackBar(content: Text("Error creating event: $_"));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
+    }
+    else{
+      SnackBar snackBar=SnackBar(content: const Text("Please fill all fields"),backgroundColor: Colors.red,);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     
   }

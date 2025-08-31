@@ -22,7 +22,8 @@ class _ItemCardState extends State<ItemCard> {
   Widget build(BuildContext context) {
     bool isfav=Provider.of<UserProvider>(context).checkIseventfav(widget.event.id);
     SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context);
-    
+   
+
     return InkWell(
       onTap: (){
         Navigator.of(context).pushNamed("Eventdetails",

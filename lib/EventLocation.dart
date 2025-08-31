@@ -19,6 +19,7 @@ class Eventlocation extends StatelessWidget {
             child: GoogleMap(
               onTap: (LatLng location){
                 settingsProvider.changeeventlocation(location);
+           
                 Navigator.pop(context);
               },
               initialCameraPosition: settingsProvider.initialCameraPosition,

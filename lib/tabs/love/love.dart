@@ -33,6 +33,7 @@ class _LoveState extends State<Love> {
     eventProvider.addtofav(favid);
     return Column(
       children: [
+        SizedBox(height: 10,),
         TextField(
           style: TextStyle(color: settingsProvider.isDark ? Colors.white : Colors.black),
           decoration: InputDecoration(

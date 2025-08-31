@@ -43,7 +43,7 @@ class Profile extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.center,
-                child: Text(Provider.of<UserProvider>(context,listen: false).currentuser!.name,style: textTheme.headlineLarge?.copyWith(color: Apptheme.white),))
+                child: Text(Provider.of<UserProvider>(context,listen: false).currentuser?.name??"",style: textTheme.headlineLarge?.copyWith(color: Apptheme.white),))
               ]
               )
         ),
@@ -106,9 +106,11 @@ class Profile extends StatelessWidget {
                 
                     width: double.infinity,
                     child: ElevatedButton(onPressed: (){
+                       Navigator.of(context).pushReplacementNamed("Home");
                       FirebaseService.logout();
+                     
                       Provider.of<UserProvider>(context,listen: false).UpdateCurrentUser(null);
-                      Navigator.of(context).pushReplacementNamed("Home");
+                      
                     }, 
                     
                     style: ElevatedButton.styleFrom(

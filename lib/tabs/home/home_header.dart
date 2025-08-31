@@ -4,7 +4,6 @@ import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/settings_provide.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:evently/l10n/app_localizations.dart';

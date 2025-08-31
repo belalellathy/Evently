@@ -1,8 +1,10 @@
 
+import 'package:evently/EventLocation.dart';
 import 'package:evently/apptheme.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/models/categories.dart';
 import 'package:evently/models/event.dart';
+import 'package:evently/providers/settings_provide.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/tab_item.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +32,19 @@ class _EditeventscreenState extends State<Editeventscreen> {
   String?_errorText_time;
   String?_errorText_descriptionn;
   late String eventid;
+  String locationname="";
   @override
   Widget build(BuildContext context) {
+     SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context);
+     
       TextTheme textTheme= Theme.of(context).textTheme;
       Event event= ModalRoute.of(context)!.settings.arguments as Event;
+      _title.text=event.title;
+      _description.text=event.description;
+      selecteddate=event.date;
+      selectedtime=TimeOfDay(hour: event.date.hour, minute: event.date.minute);
+      locationname=event.location;
+
       eventid=event.id;
     return SafeArea(
       child: Scaffold(
@@ -90,7 +101,7 @@ class _EditeventscreenState extends State<Editeventscreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
                     controller: _title,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color:settingsProvider.isDark?Apptheme.white : Apptheme.black ),
                     decoration: InputDecoration(
                       hintText: event.title,
                       errorText: _errorText_title,
@@ -199,8 +210,43 @@ class _EditeventscreenState extends State<Editeventscreen> {
                     Padding(padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: _errorText_time!=null?Text("$_errorText_time",style: textTheme.bodySmall?.copyWith(color:Colors.red),
                     textAlign: TextAlign.right,):null,)
+
                   ],
                 ),
+                 Text("Location",
+                style: textTheme.headlineMedium?.copyWith(color:settingsProvider.isDark?Apptheme.white :Apptheme.black),
+                
+                                   
+                ),
+
+
+
+                const SizedBox(height: 10,),
+                 InkWell(
+                      onTap: () {
+                        
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Eventlocation()));
+                       
+                        // Handle location selection
+                      },
+                      child: Container(
+                        width: double.infinity,
+                       padding: const EdgeInsets.symmetric(vertical: 16),
+                        decoration: BoxDecoration(
+                          color: settingsProvider.isDark?Apptheme.primarydark : Apptheme.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Apptheme.blue)
+                        ),
+
+                        child:  
+                        Center(
+                          child: settingsProvider.eventlocationname!=null? 
+                          Text(settingsProvider.eventlocationname!, style: textTheme.headlineMedium?.copyWith(color: settingsProvider.isDark ? Apptheme.white : Apptheme.black)) :
+                          Text(locationname, style: textTheme.headlineMedium?.copyWith(color: settingsProvider.isDark ? Apptheme.white : Apptheme.black))) 
+                          
+                      )
+                    ),
                 const SizedBox(height: 16,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -241,6 +287,7 @@ class _EditeventscreenState extends State<Editeventscreen> {
     );
   }
   void _validatteinput(){
+      SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context,listen: false);
     setState(() {
       _errorText_descriptionn=_description.text.isEmpty?"Description can't be empty":null;
       _errorText_title=_title.text.isEmpty?"Title can't be empty":null;
@@ -250,6 +297,7 @@ class _EditeventscreenState extends State<Editeventscreen> {
     if(selecteddate!=null&&selectedtime!=null&&_errorText_title==null&&_errorText_descriptionn==null){
       DateTime dateTime=DateTime(selecteddate!.year,selecteddate!.month,selecteddate!.day,selectedtime!.hour,selectedtime!.minute);
       Event newevent=Event(
+        location: settingsProvider.eventlocationname!=null? settingsProvider.eventlocationname! : locationname,
          userid: Provider.of<UserProvider>(context,listen: false).currentuser!.id,
         id:eventid, title: _title.text,category: Category.categories[currentindex],date: dateTime,description: _description.text);
       FirebaseService.overwriteEvent(newevent).then((_) {

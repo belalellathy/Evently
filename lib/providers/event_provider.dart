@@ -9,9 +9,15 @@ class EventProvider with ChangeNotifier{
   Category? selectedcategory;
   Future<void>getevents()async{
     events= await FirebaseService.geteventsfromfirestor(selectedcategory?.id);
-    events.sort(
+    if(events.isNotEmpty){
+       events.sort(
       (event, nextevent) =>event.date.compareTo(nextevent.date) ,
     );
+    }
+    else{
+      events=[];
+    }
+
     notifyListeners();
   }
   void changeselectedcategory(Category category){

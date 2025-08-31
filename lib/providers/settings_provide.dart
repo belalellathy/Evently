@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:evently/models/event.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -113,17 +110,17 @@ Future<void>getlocationname()async{
   Future<void> changeeventlocation(LatLng location)async{
     eventlocation=location;
     List<geocoding.Placemark> placemarks = await geocoding.placemarkFromCoordinates(
-      locationData.latitude ?? 0,
-      locationData.longitude ?? 0,
+      location.latitude,
+      location.longitude
     );
     if (placemarks.isNotEmpty) {
       geocoding.Placemark place = placemarks.first;
-      eventlocationname = place.subAdministrativeArea ?? '';
+      eventlocationname = (place.name??'')+ " " + (place.subAdministrativeArea ?? '');
+      print(place.name);
 
     }
     notifyListeners();
-    
-    }
+  }
 
   CameraPosition get initialCameraPosition {
     return CameraPosition(

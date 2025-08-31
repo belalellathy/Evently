@@ -6,6 +6,7 @@ import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+ import 'package:url_launcher/url_launcher.dart';
 
 class Eventdetails extends StatefulWidget {
   const Eventdetails({super.key});
@@ -90,11 +91,53 @@ class _EventdetailsState extends State<Eventdetails> {
               ),
               const SizedBox(height: 16,),
               Text("Description",style: textTheme.headlineMedium,),
-              Text(event.description,style: textTheme.bodyLarge?.copyWith(color: settingsProvider.isDark?Apptheme.white :Apptheme.black),)
+              Text(event.description,style: textTheme.bodyLarge?.copyWith(color: settingsProvider.isDark?Apptheme.white :Apptheme.black),),
+              const SizedBox(height: 16,),
+              Text("Location",style: textTheme.headlineMedium,),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1,color: Apptheme.blue),
+                  borderRadius: BorderRadius.circular(16)
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Apptheme.blue,
+                          borderRadius: BorderRadius.circular(8)
+                        ),
+                        child:  Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.my_location_sharp,color: settingsProvider.isDark ? Apptheme.black : Apptheme.white,),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+
+                    InkWell(
+                      onTap: () {
+                        openMaps(event.location);
+                      },
+                      child: Text(event.location, style: textTheme.bodyLarge?.copyWith(color: settingsProvider.isDark ? Apptheme.white : Apptheme.black),),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
         
     );
   }
+
+  Future<void> openMaps(String location) async {
+  final Uri url = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(location)}');
+
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 }

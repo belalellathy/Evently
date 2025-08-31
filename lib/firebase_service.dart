@@ -35,11 +35,20 @@ class FirebaseService{
   static Future<List<Event>>geteventsfromfirestor(String? categoryID)async{
     CollectionReference<Event>eventscollection=geteventscollection();
     late QuerySnapshot<Event>querySnapshot;
+    DateTime now = DateTime.now();
+    DateTime today =DateTime(now.year, now.month, now.day);
+ 
+
     if(categoryID!=null&&categoryID!="0"){
-      querySnapshot= await eventscollection.where("categoryID",isEqualTo: categoryID).get();
-    }else{
-        querySnapshot= await eventscollection.get();
+      
+      querySnapshot= await eventscollection.where("categoryID",isEqualTo: categoryID).where("date",isGreaterThanOrEqualTo: today).orderBy("date").get();
+
+
     }
+      else{
+          querySnapshot= await eventscollection.where("date",isGreaterThanOrEqualTo: today).orderBy("date").get();
+        
+      }
     return querySnapshot.docs.map((docsnapshot)=>docsnapshot.data()).toList();
 
   }
@@ -61,6 +70,7 @@ class FirebaseService{
     UserCredential credential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     CollectionReference<Usermodel>userscollection=getuserscollection();
     DocumentSnapshot<Usermodel>usersnapshot= await userscollection.doc(credential.user!.uid).get();
+  
     return usersnapshot.data()!;
     
   }

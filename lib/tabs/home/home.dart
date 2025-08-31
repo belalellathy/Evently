@@ -1,5 +1,7 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/providers/event_provider.dart';
+import 'package:evently/providers/settings_provide.dart';
 import 'package:evently/tabs/home/home_header.dart';
 import 'package:evently/tabs/home/item_card.dart';
 
@@ -12,6 +14,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     EventProvider eventProvider= Provider.of<EventProvider>(context);
+    SettingsProvide settingsProvider=Provider.of<SettingsProvide>(context);
     
       eventProvider.getevents();
     
@@ -20,12 +23,15 @@ class Home extends StatelessWidget {
       const SizedBox(height: 16,),
       Expanded(
         child: ListView.separated(
-          itemBuilder: (_,index)=>ItemCard(eventProvider.events[index]), 
+          itemBuilder:eventProvider.events.isEmpty ?(_,__)=> 
+             Center(
+              child: Text("No upcoming events", style: TextStyle(color:settingsProvider.isDark ? Colors.white : Colors.black),),  
+            )
+           :(_,index)=>ItemCard(eventProvider.events[index]), 
           separatorBuilder:(_,__)=> const Divider(color: Colors.transparent,), 
-          itemCount: eventProvider.events.length),
+          itemCount: eventProvider.events.isEmpty ? 1 : eventProvider.events.length),
       )
-      
-    ],)
-    ;
+
+    ],);
   }
 }

@@ -10,6 +10,7 @@ class Event {
   String title;
   String description;
   DateTime date;
+  String location;
 
   Category category;
   Event({
@@ -18,14 +19,17 @@ class Event {
   required this.title,
   required this.description,
   required this.date,
-  required this.category});
+  required this.category,
+  required this.location
+});
   Event.forJson(Map <String,dynamic> Json):this(
     id:Json["id"] ,
     userid:Json["uid"] ,
     title:Json["title"] ,
     description:Json["description"] ,
     date:(Json["date"]as Timestamp).toDate() ,
-    category:Category.categories.firstWhere((Category)=>Category.id==Json["categoryID"])
+    category:Category.categories.firstWhere((Category)=>Category.id==Json["categoryID"]),
+    location:Json["location"],
     );
   Map <String,dynamic> toJson()=>{
   "id": id,
@@ -34,6 +38,7 @@ class Event {
   "description":description,
   "categoryID":category.id,
   "date":Timestamp.fromDate(date),
+  "location":location
 };
 
   

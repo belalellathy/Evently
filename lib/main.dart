@@ -10,7 +10,6 @@ import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/settings_provide.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/splash.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
