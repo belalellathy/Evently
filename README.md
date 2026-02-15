@@ -1,16 +1,18 @@
-# evently
+🗓️ Evently — Flutter Event Management App
+Evently is a Flutter application that lets users create, view, and manage events. Built with Firebase as the backend, this app includes user authentication, cloud storage for event data, and an intuitive UI for organizing and browsing events.
+📌 Features
+🔐 Firebase Authentication (Sign up & Login)
+📅 Create, Update & Delete Events
+📍 Event location support
+☁️ Cloud storage using Firebase Firestore
+📸 Upload images for events
+📱 Responsive UI across devices
+⚡ Real-time updates with Firestore streams
+🛠️ Tech Stack
+Flutter & Dart
+Firebase Auth — user authentication
+Cloud Firestore — data storage
+Firebase Storage — event image uploads
+Google Maps / Location services
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Video link for app prototype: https://drive.google.com/file/d/1PgW9jX-isbqaVVQEKWpEkyB_RYbX6qMl/view?usp=sharing
